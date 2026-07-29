@@ -7,12 +7,14 @@ if [ ! -f "wp-config.php" ]; then
 
     DB_PWD=$(cat /run/secrets/db_password)
     WP_ADMIN_PWD=$(cat /run/secrets/credentials)
-
+    CHEMIN=$(pwd)
+    LSITE=$(ls)
+    echo "${CHEMIN} > ${LSITE}"
     wp config create \
         --dbname="${MYSQL_DATABASE}" \
         --dbuser="${MYSQL_USER}" \
         --dbpass="${DB_PWD}" \
-        --dbhost="mariadb:3306" \
+        --dbhost="mariadb" \
         --allow-root
 
     wp core install \
@@ -20,6 +22,7 @@ if [ ! -f "wp-config.php" ]; then
         --title="Inception 42" \
         --admin_user="super_master" \
         --admin_password="${WP_ADMIN_PWD}" \
+        --admin_email="admin@student.42.fr" \
         --skip-email \
         --allow-root
 
@@ -30,6 +33,7 @@ if [ ! -f "wp-config.php" ]; then
         --user_pass="UserPass123!" \
         --allow-root
 fi
+
 
 chown -R www-data:www-data /var/www/html
 

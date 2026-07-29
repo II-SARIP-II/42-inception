@@ -1,16 +1,18 @@
 #!/bin/bash
 
 if [ ! -d "/var/lib/mysql/wordpress" ]; then
+
     mysql_install_db --user=mysql --datadir=/var/lib/mysql > /dev/null
-    mysql --user=mysql &
+
+    mysqld --user=mysql &
     pid="$!"
 
     until mysqladmin ping --silent; do
         sleep 1
     done
 
-    DB_ROOT_PWD=$(cat /run/secrets/db_root_password.txt)
-    DB_PWD=$(cat /run/secrets/db_password.txt)
+    DB_ROOT_PWD=$(cat /run/secrets/db_root_password)
+    DB_PWD=$(cat /run/secrets/db_password)
 
     mysql -u root <<-EOSQL
         ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PWD}';
@@ -26,4 +28,4 @@ EOSQL
     mysqladmin -u root -p"${DB_ROOT_PWD}" shutdown
 fi
 
-exec mysql --user=mysql
+exec mysqld --user=mysql
