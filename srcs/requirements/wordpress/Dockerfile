@@ -10,7 +10,7 @@ RUN apt update && apt install -y \
     php8.2-zip \
     curl \
     mariadb-client \
-    && rn -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
@@ -25,4 +25,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 9000
 
-ENTRPOINT ["entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
