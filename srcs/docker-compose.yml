@@ -53,6 +53,63 @@ services:
     networks:
       - inception_network
 
+  adminer:
+    build:
+      context: requirements/bonus/adminer
+      dockerfile: Dockerfile
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - inception_network
+    depends_on:
+      - mariadb
+
+  redis:
+    build:
+      context: requirements/bonus/redis
+      dockerfile: Dockerfile
+    container_name: redis
+    restart: always
+    expose:
+      - "6379"
+    networks:
+      - inception_network
+  
+  static_site:
+    build:
+      context: requirements/bonus/static_site
+      dockerfile: Dockerfile
+    container_name: static_site
+    restart: always
+    ports:
+      - "8081:8081"
+    networks:
+      - inception_network
+
+  ftp:
+    build:
+      context: requirements/bonus/ftp
+      dockerfile: Dockerfile
+    container_name: ftp
+    restart: always
+    ports:
+      - "21:21"
+      - "20:20"
+      - "40000-40005:40000-40005"
+    environment:
+      - FTP_USER=${WP_USER}
+      - DOMAIN_NAME=${DOMAIN_NAME}
+    secrets:
+      - wp_user_password
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception_network
+    depends_on:
+      - wordpress
+
 secrets:
   db_root_password:
     file: ../secrets/db_root_password.txt

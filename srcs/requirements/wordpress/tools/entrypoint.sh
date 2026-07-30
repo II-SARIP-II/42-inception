@@ -31,6 +31,13 @@ if [ ! -f "wp-config.php" ]; then
         --role=author \
         --user_pass="${WP_USER_PWD}" \
         --allow-root
+
+    wp config set WP_REDIS_HOST redis --allow-root
+    wp config set WP_REDIS_PORT 6379 --raw --allow-root
+    wp config set WP_CACHE true --raw --allow-root
+
+    wp plugin install redis-cache --activate --allow-root
+    wp plugin enable redis-cache --allow-root
 fi
 
 chown -R www-data:www-data /var/www/html
