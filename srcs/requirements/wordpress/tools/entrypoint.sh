@@ -7,9 +7,8 @@ if [ ! -f "wp-config.php" ]; then
 
     DB_PWD=$(cat /run/secrets/db_password)
     WP_ADMIN_PWD=$(cat /run/secrets/credentials)
-    CHEMIN=$(pwd)
-    LSITE=$(ls)
-    echo "${CHEMIN} > ${LSITE}"
+    WP_USER_PWD=$(cat /run/secrets/wp_user_password)
+
     wp config create \
         --dbname="${MYSQL_DATABASE}" \
         --dbuser="${MYSQL_USER}" \
@@ -18,7 +17,7 @@ if [ ! -f "wp-config.php" ]; then
         --allow-root
 
     wp core install \
-        --url="${https://${DOMAIN_NAME}}" \
+        --url="https://${DOMAIN_NAME}" \
         --title="Inception 42" \
         --admin_user="super_master" \
         --admin_password="${WP_ADMIN_PWD}" \
@@ -30,10 +29,9 @@ if [ ! -f "wp-config.php" ]; then
         "${WP_USER}" \
         "${WP_USER_EMAIL}" \
         --role=author \
-        --user_pass="UserPass123!" \
+        --user_pass="${WP_USER_PWD}" \
         --allow-root
 fi
-
 
 chown -R www-data:www-data /var/www/html
 
