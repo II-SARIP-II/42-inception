@@ -100,7 +100,6 @@ services:
       - "40000-40005:40000-40005"
     environment:
       - FTP_USER=${WP_USER}
-      - DOMAIN_NAME=${DOMAIN_NAME}
     secrets:
       - wp_user_password
     volumes:
@@ -109,6 +108,23 @@ services:
       - inception_network
     depends_on:
       - wordpress
+
+  cadvisor:
+    build:
+      context: requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+    container_name: cadvisor
+    restart: always
+    ports:
+      - "8082:8082"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - inception_network
 
 secrets:
   db_root_password:
