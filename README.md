@@ -3,12 +3,13 @@ _This project has been created as part of the 42 curriculum by pgougne._
 ![42 banners](assets/42banner.jpg)
 
 # Description
+This project is about building an infrastructure of isolated services (Nginx, WordPress, MariaDB, and additional bonus tools) using Docker and Docker Compose.
+While standard Docker projects often pull pre-configured application images directly from Docker Hub (like nginx or wordpress), the 42 subject requires us to build our own custom images from a base OS image (Debian Bookworm) using dedicated Dockerfiles. This ensures full control over configuration, environment variables, security, and service initialization.
 
 # Instructions
 
 Building images and starting containers:
 > make all
-
 ___
 
 Building images:
@@ -31,6 +32,24 @@ Cleaning containers, networks, and images and Deleting /data directories:
 > make fclean
 
 
+
+Main command for correction:
+# Nginx (HTTPS port 443)
+curl -k https://localhost/
+
+# Static Site(HTTP port 8081)
+curl -i http://localhost:8081/
+
+# Adminer (HTTP port 8080)
+curl -i http://localhost:8080/
+
+# cAdvisor (HTTP port 8082)
+curl -i http://localhost:8082/
+
+# FTP (Passive Mode)
+curl -u user42:$(cat secrets/wp_user_password.txt | tr -d '\r\n') ftp://127.0.0.1/
+
+
 # Resources
 https://www.golinuxcloud.com/install-deb-file-debian/
 https://dev.to/bobrundle/how-to-fix-wordpress-error-establishing-a-database-connection-idl
@@ -44,6 +63,22 @@ https://www.geeksforgeeks.org/devops/docker-or-virtual-machines-which-is-a-bette
 https://thisvsthat.io/environment-variables-vs-secrets
 
 
+How AI was used ?
+Ai was used throughout this project as a support and learning assistant.
+
+- Debugging:
+
+  - Explain unexpected behaviors
+  - Suggest potential causes of bugs
+
+- Understanding Docker and commands:
+  - Get some example
+  - Complet the documentation
+
+- Global Assistance:
+
+  - Discuss best practices
+  - Helping me build some files
 
 # Additionnal sections
 
