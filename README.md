@@ -47,7 +47,7 @@ curl -i http://localhost:8080/
 curl -i http://localhost:8082/
 
 # FTP (Passive Mode)
-curl -u user42:$(cat secrets/wp_user_password.txt | tr -d '\r\n') ftp://127.0.0.1/
+curl -u pgougne:$(cat secrets/wp_user_password.txt | tr -d '\r\n') ftp://127.0.0.1/
 
 
 # Resources
