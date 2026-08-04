@@ -31,4 +31,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all build up down clean fclean
+.PHONY: all build up down clean fclean re
