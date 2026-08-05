@@ -85,6 +85,7 @@ Ai was used throughout this project as a support and learning assistant.
 
   - Discuss best practices
   - Helping me build some files
+  - Helping me build DEV_DOC.md
 
 # Additionnal sections
 
