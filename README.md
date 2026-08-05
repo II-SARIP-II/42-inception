@@ -47,7 +47,10 @@ curl -i http://localhost:8080/adminer.php
 curl -i http://localhost:8082/
 
 # FTP (Passive Mode)
-curl -u pgougne:$(cat secrets/wp_user_password.txt | tr -d '\r\n') ftp://127.0.0.1/
+test:
+curl -T /etc/hosts ftp://127.0.0.1:21/test.txt --user "pgougne:UserPass123"
+docker exec -it wordpress ls -la /var/www/html/
+
 
 
 # Resources

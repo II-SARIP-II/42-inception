@@ -2,20 +2,28 @@
 set -e
 
 if [ -f /run/secrets/wp_user_password ]; then
-    FTP_PASSWORD=$(cat /run/secrets/wp_user_password | tr -d '\r\n')
+    FTP_PASSWORD=$(cat /run/secrets/wp_user_password)
 else
-    echo "ERROR: Secret file /run/secrets/wp_user_password not found!" >&2
+    echo "Error: No secret for user" >&2
+    echo $(cat /run/secrets/wp_user_password)
+    echo $(ls /run/secrets/)
     exit 1
 fi
 
-FTP_USER=${FTP_USER:-"pgougne"}
+FTP_USER=${FTP_USER:-${WP_USER}}
+
+if [ -z "$FTP_USER" ]; then
+    echo "Erreur : FTP_USER or WP_USER empty." >&2
+    exit 1
+fi
+
+mkdir -p /var/run/vsftpd/empty
 
 echo "auth required pam_unix.so nullok" > /etc/pam.d/vsftpd
 echo "account required pam_unix.so" >> /etc/pam.d/vsftpd
 
 if ! id "${FTP_USER}" >/dev/null 2>&1; then
-    useradd -m -s /bin/bash "${FTP_USER}"
-    usermod -aG www-data "${FTP_USER}"
+    useradd -m -g www-data -s /bin/bash "${FTP_USER}"
 fi
 
 echo "${FTP_USER}:${FTP_PASSWORD}" | chpasswd

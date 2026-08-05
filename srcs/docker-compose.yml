@@ -94,6 +94,8 @@ services:
       dockerfile: Dockerfile
     container_name: ftp
     restart: always
+    env_file:
+      - .env
     ports:
       - "21:21"
       - "20:20"
