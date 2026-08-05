@@ -10,5 +10,7 @@ if [ ! -f /etc/nginx/ssl/inception.crt ]; then
 fi
 
 sed -i "s/DOMAIN_NAME_HOLDER/${DOMAIN_NAME}/g" /etc/nginx/conf.d/default.conf
+# fill the /etc/nginx/conf.d/default.comf with the DOMAIN_NAME value for every occurence of DOMAIN_NAME_HOLDER
 
 exec nginx -g 'daemon off;'
+# replace the PID 1 by nginx. -g 'daemon off;' force nginx too execute in the foreground 
