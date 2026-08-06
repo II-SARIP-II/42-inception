@@ -211,3 +211,20 @@ volumes:
 > curl -T /etc/hosts ftp://127.0.0.1:21/test.txt --user "pgougne:UserPass123"\
 docker exec -it wordpress ls -la /var/www/html/
 
+
+## Connect to the Database: 
+
+Connection to the mariadb CLI
+> docker exec -it mariadb bash
+
+Connect with the user
+> mariadb -u <USER NAME> -p -> Then, enter the password
+
+Select the right Database:
+> USE wordpress;
+
+Print all tables:
+> SHOW TABLES;
+
+Show all the users
+SELECT * FROM wp_users;
