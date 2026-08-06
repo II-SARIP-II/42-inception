@@ -25,6 +25,8 @@ if [ ! -f "wp-config.php" ]; then
         --skip-email \
         --allow-root
 
+    wp theme install twentytwenty --activate --allow-root
+
     wp user create \
         "${WP_USER}" \
         "${WP_USER_EMAIL}" \
